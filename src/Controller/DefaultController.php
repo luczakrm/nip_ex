@@ -25,8 +25,14 @@ class DefaultController extends AbstractController
     {
         $value = $request->get('nip');
 
+        try {
+            $result = $this->nipValidatorService->validate($value);
+        } catch (\Exception $exception) {
+            $result = $exception->getMessage() . ' (' . $exception->getCode() . ')';
+        }
+
         return new Response(
-            $this->nipValidatorService->validate($value)
+            $result
         );
     }
 }

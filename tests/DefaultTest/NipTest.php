@@ -9,8 +9,6 @@ use App\Exception\InvalidValueLengthException;
 use App\Exception\InvalidValueTypeException;
 use App\Exception\MissingValueException;
 use App\Service\NipValidatorService;
-use PhpParser\Node\Expr\Cast\Object_;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class NipTest extends KernelTestCase {
@@ -52,7 +50,6 @@ final class NipTest extends KernelTestCase {
     public function lengthWithDashes(): array
     {
         return [
-            ['626-292-58-00'],
             ['116-26-29-258-00'],
             ['116-262'],
         ];
@@ -68,7 +65,7 @@ final class NipTest extends KernelTestCase {
 
     public function testNullValue(): void
     {
-        $this->expectException(MissingValueException::class);
+        $this->expectException(InvalidValueTypeException::class);
 
         $value = null;
         $this->validator->validate($value);
@@ -114,7 +111,8 @@ final class NipTest extends KernelTestCase {
      */
     public function testTrimWithInvalidChecksums($value): void
     {
-        $this->assertTrue($this->validator->validate($value));
+        $this->expectException(InvalidValueException::class);
+        $this->validator->validate($value);
     }
 
     public function withDashesInvalidChecksumsToTrim(): array
