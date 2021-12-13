@@ -15,7 +15,7 @@ class NipValidatorService {
     const DEFAULT_LENGTH = 10;
 
     /**
-     * returns true if NIP value is correct or throws exception with error
+     * return true if NIP value is correct or throws exception with error
      *
      * @param $value
      * @return bool
@@ -38,6 +38,10 @@ class NipValidatorService {
 
         if (strlen($value) !== self::DEFAULT_LENGTH) {
             throw new InvalidValueLengthException();
+        }
+
+        if (!is_numeric($value)) {
+            throw new InvalidValueException();
         }
 
         $result = $this->checkValue($value);

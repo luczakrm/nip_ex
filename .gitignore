@@ -1,4 +1,3 @@
-/.idea/
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -9,6 +8,11 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+/.idea/
+/composer.lock
+/symfony.lock
+/.env.test
+/.env
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
